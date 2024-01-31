@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "342978208084",
+    "project_id": "lastnotification-b373d",
+    "storage_bucket": "lastnotification-b373d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342978208084:android:4a76bdbc19038f701ca8c1",
+        "android_client_info": {
+          "package_name": "com.example.lastnotification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA98r90pbTh-COp14EGhWqzOQ_2jXm9i7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
