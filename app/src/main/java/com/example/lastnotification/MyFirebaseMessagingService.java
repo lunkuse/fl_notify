@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,7 +27,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 	public static final String FCM_PARAM = "picture";
 	private static final String CHANNEL_NAME = "FCM";
 	private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
-	private int numMessages = 0;
+	private int numMessages = 1;
 
 	@Override
 	public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -41,11 +42,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		Bundle bundle = new Bundle();
 		bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
 
-		Intent intent = new Intent(this, SecondActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtras(bundle);
-
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addNextIntentWithParentStack(intent);
 //		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+//		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+//		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+
 
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
 				.setContentTitle(notification.getTitle())
@@ -59,7 +66,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 				.setColor(getColor(R.color.colorAccent))
 				.setLights(Color.RED, 1000, 300)
 				.setDefaults(Notification.DEFAULT_VIBRATE)
-				.setNumber(++numMessages)
+				.setNumber(numMessages)
+
 				.setSmallIcon(R.drawable.ic_notification);
 
 		try {

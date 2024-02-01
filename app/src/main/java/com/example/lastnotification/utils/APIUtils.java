@@ -1,9 +1,6 @@
 package com.example.lastnotification.utils;
 
 
-import com.example.lastnotification.services.FcmApi;
-import com.example.lastnotification.services.RetrofitClient;
-
 public class APIUtils {
 
 //    private APIUtils(){

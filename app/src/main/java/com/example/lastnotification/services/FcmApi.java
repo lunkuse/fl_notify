@@ -1,6 +1,7 @@
 package com.example.lastnotification.services;
 
 
+import com.example.lastnotification.model.NotificationModel;
 import com.example.lastnotification.model.contract;
 
 import java.util.List;
@@ -23,6 +24,11 @@ String  token = "test"
 //    @POST("api/notification/send/")
    @GET("api/notification/send/{token}")
    Call<ResponseBody> sendToken(@Path("token") String tokenData);
+
+   @GET("api/notification/")
+   Call<List<NotificationModel>> getNotifications();
+
+
 //    @Headers({"Content-Type: application/json"})
 //    Call<ResponseBody> sendToken(@Body contract tokenData);
 }
