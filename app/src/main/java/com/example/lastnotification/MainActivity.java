@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -65,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     private String token;
     private RecyclerView recyclerView;
     private NotificationAdapter notificationAdapter;
+
+    private ListView listView;
+
+
     private List<NotificationModel> notifications = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +82,16 @@ public class MainActivity extends AppCompatActivity {
         if (permissionState == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
         }
+
+        listView = findViewById(R.id.listviewData);
+
+//        List<NotificationModel> notifications = [];
+
+//        NotificationModel notifs =[];
 //
-        recyclerView = findViewById(R.id.notifications_recycler_view);
-//        notificationAdapter = new NotificationAdapter(this)// Create the adapter
+//        recyclerView = findViewById(R.id.notifications_recycler_view);
+//        notificationAdapter = new NotificationAdapter(NotificationModel[]);
+//        listView.setAdapter(new ArrayAdapter < String > (getApplicationContext(), android.R.layout.simple_list_item_1, names));
 //        recyclerView.setAdapter(notificationAdapter); // Bind the adapter to the RecyclerView
 
 //        mTextView = findViewById(R.id.txt);
@@ -174,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void getNotifications(){
-        String url = "https://580e-197-221-137-206.ngrok-free.app/";
+        String url = "https://notify.hmvtechgroup.com/";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -190,14 +203,30 @@ public class MainActivity extends AppCompatActivity {
 
                     List<NotificationModel> notifications = response.body();
 
+                    System.out.println("notifyiList"+notifications);
+                    if(notifications !=null){
+//                        new NotificationAdapter(notifications);
+                        listView.setAdapter(new ArrayAdapter < NotificationModel > (getApplicationContext(), android.R.layout.simple_list_item_1, notifications));
 
-                    if (notificationAdapter != null) {
-                        System.out.println("notifyList"+notifications);
-                        notificationAdapter.setNotifications(notifications);
-                    } else {
-                        Log.e("Error", "NotificationAdapter is null");
-                        // Display a user-friendly error message if needed
+
+
+
+
+
+
+                    }else{
+                        Toast.makeText(MainActivity.this, "No Data Found", Toast.LENGTH_SHORT).show();
                     }
+
+
+//                    recyclerView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.notification_item,notifications));
+//                    if (notificationAdapter != null) {
+//
+//                        notificationAdapter.setNotifications(notifications);
+//                    } else {
+//                        Log.e("Error", "NotificationAdapter is null");
+//                        // Display a user-friendly error message if needed
+//                    }
                 } else {
                     // Handle error
                     Toast.makeText(MainActivity.this, "Failed to fetch notifications", Toast.LENGTH_SHORT).show();
