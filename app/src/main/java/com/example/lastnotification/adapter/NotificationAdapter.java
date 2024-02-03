@@ -30,6 +30,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationViewHo
         NotificationModel notification = notifications.get(position);
         holder.contractNameTextView.setText(notification.getContractName());
         holder.logDetailsTextView.setText(notification.getLogDetails());
+
+        holder.logDateTextView.setText(notification.getCreatedAt());
         // Format and set timestamp as needed
     }
 

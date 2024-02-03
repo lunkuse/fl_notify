@@ -67,7 +67,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 				.setLights(Color.RED, 1000, 300)
 				.setDefaults(Notification.DEFAULT_VIBRATE)
 				.setNumber(numMessages)
-
+				.setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
 				.setSmallIcon(R.drawable.ic_notification);
 
 		try {
