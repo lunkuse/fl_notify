@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.os.Bundle;
 import android.os.Handler;
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void getNotifications(){
-        String url = "https://580e-197-221-137-206.ngrok-free.app/";
+        String url = "https://notify.hmvtechgroup.com/";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -190,14 +191,25 @@ public class MainActivity extends AppCompatActivity {
 
                     List<NotificationModel> notifications = response.body();
 
+                    if(notifications != null){
+//                        notificationAdapter = new NotificationAdapter(notifications);// Create the adapter
+//                        notificationAdapter.setNotifications(notifications);
+//        recyclerView.setAdapter(notificationAdapter);
+//                        new NotificationAdapter(notifications);
 
-                    if (notificationAdapter != null) {
-                        System.out.println("notifyList"+notifications);
-                        notificationAdapter.setNotifications(notifications);
-                    } else {
-                        Log.e("Error", "NotificationAdapter is null");
-                        // Display a user-friendly error message if needed
+                        SimpleAdapter simpleAdapter=new SimpleAdapter(this,notifications,R.layout.notification_item,from,to);
+                    }else{
+                        Toast.makeText(MainActivity.this, "No notifications", Toast.LENGTH_SHORT).show();
                     }
+
+
+//                    if (notificationAdapter != null) {
+//                        System.out.println("notifyList"+notifications);
+//                        notificationAdapter.setNotifications(notifications);
+//                    } else {
+//                        Log.e("Error", "NotificationAdapter is null");
+//                        // Display a user-friendly error message if needed
+//                    }
                 } else {
                     // Handle error
                     Toast.makeText(MainActivity.this, "Failed to fetch notifications", Toast.LENGTH_SHORT).show();
